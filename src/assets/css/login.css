@@ -1,0 +1,64 @@
+ 
+  /* Center the login card using flexbox */
+  .login-wrapper {
+    display: flex;
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    min-height: 100vh; /* Take the full height of the viewport */
+    background-color: #f4f7fc; /* Light background for the page */
+  }
+  
+  /* Specific styling for the Login Card */
+  .login-card {
+    width: 100%;
+    max-width: 30rem; /* Limit the width of the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    border-radius: 10px; /* Slightly rounded corners */
+  }
+  
+  form div {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  input.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  input.form-control:focus {
+    outline: none;
+    border-color: #4a90e2;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4a90e2; /* Button background color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #357abd; /* Darker shade on hover */
+  }
+  
+  .error {
+    color: #e74c3c;
+    margin-top: 10px;
+    font-size: 0.9rem;
+  }
+  
