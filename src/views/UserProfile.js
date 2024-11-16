@@ -111,18 +111,8 @@ function UserProfile() {
             <CardBody>
               <Form onSubmit={handleSubmit}>
                 <Row>
-                  <Col className="pr-md-1" md="5">
-                    <FormGroup>
-                      <label>Company (disabled)</label>
-                      <Input
-                        value={user.name}
-                        disabled
-                        placeholder="Company"
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="px-md-1" md="3">
+                  
+                  <Col className="px-md-1" md="5">
                     <FormGroup>
                       <label>Username</label>
                       <Input
@@ -134,10 +124,11 @@ function UserProfile() {
                       />
                     </FormGroup>
                   </Col>
-                  <Col className="pl-md-1" md="4">
+                  <Col className="pl-md-1" md="5">
                     <FormGroup>
                       <label htmlFor="exampleInputEmail1">Email address</label>
                       <Input
+                        disabled
                         name="email"
                         value={user.email}
                         onChange={handleChange}
