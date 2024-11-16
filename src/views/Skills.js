@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, CardTitle,CardBody,  Col, Row,CardHeader,Card,Input } from 'reactstrap';
+import { Table, Button, Modal, ModalHeader, ModalBody,  ModalFooter,Form, FormGroup, Label, CardTitle,CardBody,  Col, Row,CardHeader,Card,Input } from 'reactstrap';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
  
@@ -10,6 +10,8 @@ const Skills = () => {
   const [newSkill, setNewSkill] = useState({ name: '', icon: '', level: '' });
   const [editingSkill, setEditingSkill] = useState(null); // Pour l'édition d'une compétence
   const [modalOpen, setModalOpen] = useState(false); // Pour l'ouverture du modal d'édition
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [skillToDelete, setSkillToDelete] = useState(null);
   const apiUrl = process.env.REACT_APP_API_URL;
 
   // Charger les compétences depuis le backend
@@ -25,14 +27,25 @@ const Skills = () => {
     fetchSkills();
   }, []);
 
-  // Supprimer une compétence
-  const deleteSkill = async (id) => {
+  const deleteSkill = async () => {
     try {
-      await axios.delete(`${apiUrl}/api/skills/${id}`);
-      setSkills(skills.filter(skill => skill._id !== id)); // Met à jour la liste des compétences
+      await axios.delete(`${apiUrl}/api/skills/${skillToDelete}`);
+      setSkills(skills.filter(skill => skill._id !== skillToDelete));
+      setConfirmDeleteOpen(false);
+      setSkillToDelete(null);
     } catch (error) {
-      console.error("Erreur lors de la suppression de la compétence", error);
+      console.error('Erreur lors de la suppression de la compétence', error);
     }
+  };
+
+  const openDeleteConfirmation = (id) => {
+    setSkillToDelete(id);
+    setConfirmDeleteOpen(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+    setConfirmDeleteOpen(false);
+    setSkillToDelete(null);
   };
 
   // Ouvrir le modal d'édition
@@ -154,7 +167,9 @@ const Skills = () => {
               <td>{skill.level}</td>
               <td className="text-center">
                 <Button  className="btn-icon btn-simple" color="warning"  size="sm" onClick={() => openEditModal(skill)}><i className="fas fa-pencil-alt"></i></Button>{` `}
-                <Button  className="btn-icon btn-simple" color="danger" size="sm"  onClick={() => deleteSkill(skill._id)}><i className="fas fa-trash"></i></Button>{` `}
+                <Button className="btn-icon btn-simple" color="danger" size="sm" onClick={() => openDeleteConfirmation(skill._id)}>
+                  <i className="fas fa-trash"></i>
+                </Button>{' '}
               </td>
             </tr>
           ))}
@@ -212,6 +227,16 @@ const Skills = () => {
             <Button color="primary" type="submit">Save Changes</Button>
           </Form>
         </ModalBody>
+      </Modal>
+      <Modal isOpen={confirmDeleteOpen} toggle={closeDeleteConfirmation}>
+        <ModalHeader toggle={closeDeleteConfirmation}>Confirm Delete</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete this skill?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={deleteSkill}>Delete</Button>
+          <Button color="secondary" onClick={closeDeleteConfirmation}>Cancel</Button>
+        </ModalFooter>
       </Modal>
        </Row>
     </div>
