@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, CardTitle, CardBody, Col, Row, CardHeader, Card, Input } from 'reactstrap';
+import { Table, Button, Modal,ModalFooter, ModalHeader, ModalBody, Form, FormGroup, Label, CardTitle, CardBody, Col, Row, CardHeader, Card, Input } from 'reactstrap';
 import axios from 'axios';
 
 const Project = () => {
@@ -11,6 +11,9 @@ const Project = () => {
   
   const [editingProject, setEditingProject] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState(null);
 
   // Load projects data from backend
   useEffect(() => {
@@ -25,15 +28,30 @@ const Project = () => {
     fetchProjects();
   }, []);
 
-  // Delete a project
-  const deleteProject = async (id) => {
+// Open the delete confirmation modal
+const openDeleteModal = (project) => {
+  setProjectToDelete(project);
+  setDeleteModalOpen(true);
+};
+
+// Close the delete confirmation modal
+const closeDeleteModal = () => {
+  setDeleteModalOpen(false);
+  setProjectToDelete(null);
+};
+
+// Delete a project
+const confirmDeleteProject = async () => {
+  if (projectToDelete) {
     try {
-      await axios.delete(`${apiUrl}/api/projects/${id}`);
-      setProjects(projects.filter(item => item._id !== id));
+      await axios.delete(`${apiUrl}/api/projects/${projectToDelete._id}`);
+      setProjects(projects.filter(item => item._id !== projectToDelete._id));
+      closeDeleteModal();
     } catch (error) {
       console.error("Error deleting project", error);
     }
-  };
+  }
+};
 
   // Open the edit modal
   const openEditModal = (project) => {
@@ -216,7 +234,15 @@ const Project = () => {
                       <td>{project.description}</td>
                       <td className="text-center">
                         <Button  className="btn-icon btn-simple" color="warning" size="sm" onClick={() => openEditModal(project)}><i className="fa fa-edit"></i></Button>
-                        <Button  className="btn-icon btn-simple" color="danger" size="sm" onClick={() => deleteProject(project._id)}><i className="fa fa-times"></i></Button>
+                        
+                        <Button
+                      className="btn-icon btn-simple"
+                      color="danger"
+                      size="sm"
+                      onClick={() => openDeleteModal(project)}
+                    >
+                      <i className="fa fa-times"></i>
+                    </Button>
                         {project.images && project.images.map((image, index) => (
                           <img key={index} src={`${apiUrl}${image}`} alt={`Project ${project.title} image`} width="50" height="50" />
                         ))}
@@ -288,6 +314,21 @@ const Project = () => {
             <Button color="primary" type="submit">Save Changes</Button>
           </Form>
         </ModalBody>
+      </Modal>
+       {/* Delete Confirmation Modal */}
+       <Modal isOpen={deleteModalOpen} toggle={closeDeleteModal}>
+        <ModalHeader toggle={closeDeleteModal}>Confirm Delete</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete the project "{projectToDelete?.title}"?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={confirmDeleteProject}>
+            Delete
+          </Button>
+          <Button color="secondary" onClick={closeDeleteModal}>
+            Cancel
+          </Button>
+        </ModalFooter>
       </Modal>
     </div>
   );
