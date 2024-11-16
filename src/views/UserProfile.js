@@ -16,6 +16,7 @@ import axios from "axios";
 
 function UserProfile() {
   const { userEmail } = useUser();
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [user, setUser] = useState({
     _id: "", // Added user ID to keep track
     name: "",
@@ -37,7 +38,7 @@ function UserProfile() {
   useEffect(() => {
     // Fetch user profile data by email when the component mounts
     axios
-      .get(`http://localhost:5000/api/users/profile?email=${userEmail}`)
+      .get(`${apiUrl}/api/users/profile?email=${userEmail}`)
       .then((response) => {
         setUser(response.data);
       })
