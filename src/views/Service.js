@@ -7,6 +7,8 @@ const Services = () => {
   const [newService, setNewService] = useState({ name: '', icon: '', description: '', price: '' });
   const [editingService, setEditingService] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [serviceToDelete, setServiceToDelete] = useState(null);
   const apiUrl = process.env.REACT_APP_API_URL;
 
   // Fetch services from the backend
@@ -22,15 +24,29 @@ const Services = () => {
     fetchServices();
   }, []);
 
-  // Handle delete
-  const deleteService = async (id) => {
-    try {
-      await axios.delete(`${apiUrl}/api/services/${id}`);
-      setServices(services.filter(service => service._id !== id));
-    } catch (error) {
-      console.error("Error deleting service:", error);
-    }
-  };
+ // Handle delete
+ const deleteService = async () => {
+  try {
+    await axios.delete(`${apiUrl}/api/services/${serviceToDelete}`);
+    setServices(services.filter(service => service._id !== serviceToDelete));
+    setServiceToDelete(null);
+    setDeleteModalOpen(false);
+  } catch (error) {
+    console.error("Error deleting service:", error);
+  }
+};
+
+// Open delete confirmation modal
+const openDeleteModal = (id) => {
+  setServiceToDelete(id);
+  setDeleteModalOpen(true);
+};
+
+const closeDeleteModal = () => {
+  setDeleteModalOpen(false);
+  setServiceToDelete(null);
+};
+
 
   // Open and close modal for edit
   const openEditModal = (service) => {
@@ -147,7 +163,7 @@ const Services = () => {
                 <Button  className="btn-icon btn-simple" color="warning" size="sm" onClick={() => openEditModal(service)}>
                   <i className="fa fa-edit"></i>
                 </Button>
-                <Button  className="btn-icon btn-simple" color="danger" size="sm" onClick={() => deleteService(service._id)}>
+                <Button className="btn-icon btn-simple" color="danger" size="sm" onClick={() => openDeleteModal(service._id)}>
                   <i className="fa fa-trash"></i>
                 </Button>
               </td>
@@ -197,6 +213,15 @@ const Services = () => {
             
             <Button color="primary" type="submit">Save Changes</Button>
           </Form>
+        </ModalBody>
+      </Modal>
+
+      <Modal isOpen={deleteModalOpen} toggle={closeDeleteModal}>
+        <ModalHeader toggle={closeDeleteModal}>Delete Confirmation</ModalHeader>
+        <ModalBody>
+          <p>Are you sure you want to delete this service?</p>
+          <Button color="danger" onClick={deleteService}>Yes, Delete</Button>{' '}
+          <Button color="secondary" onClick={closeDeleteModal}>Cancel</Button>
         </ModalBody>
       </Modal>
     </div>
