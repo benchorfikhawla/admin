@@ -299,7 +299,7 @@ const confirmDeleteProject = async () => {
             </FormGroup>
             <FormGroup>
               <Label for="moredetails">More Details</Label>
-              <Input type="textarea" name="moredetails" id="moredetails"style={{ color: 'black' }} value={editingProject?.moreDetails || ''} onChange={handleEditChange} />
+              <Input type="textarea" name="moreDetails" id="moreDetails"style={{ color: 'black' }} value={editingProject?.moreDetails || ''} onChange={handleEditChange} />
             </FormGroup>
             <FormGroup>
               <Label for="images">Upload Images</Label>
