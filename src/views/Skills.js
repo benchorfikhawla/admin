@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, CardTitle,CardBody,  Col, Row,CardHeader,Card,Input } from 'reactstrap';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
  
 import axios from 'axios';
 
@@ -151,8 +153,8 @@ const Skills = () => {
               <td>{skill.icon}</td>
               <td>{skill.level}</td>
               <td className="text-center">
-                <Button  className="btn-icon btn-simple" color="warning"  size="sm" onClick={() => openEditModal(skill)}><i className="fa fa-edit"></i></Button>{` `}
-                <Button  className="btn-icon btn-simple" color="danger" size="sm"  onClick={() => deleteSkill(skill._id)}><i className="fa fa-times" /></Button>{` `}
+                <Button  className="btn-icon btn-simple" color="warning"  size="sm" onClick={() => openEditModal(skill)}><i className="fas fa-pencil-alt"></i></Button>{` `}
+                <Button  className="btn-icon btn-simple" color="danger" size="sm"  onClick={() => deleteSkill(skill._id)}><i className="fas fa-trash"></i</Button>{` `}
               </td>
             </tr>
           ))}
