@@ -7,12 +7,13 @@ const Services = () => {
   const [newService, setNewService] = useState({ name: '', icon: '', description: '', price: '' });
   const [editingService, setEditingService] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   // Fetch services from the backend
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/services');
+        const response = await axios.get(`${apiUrl}/api/services`);
         setServices(response.data);
       } catch (error) {
         console.error("Error fetching services:", error);
@@ -24,7 +25,7 @@ const Services = () => {
   // Handle delete
   const deleteService = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/services/${id}`);
+      await axios.delete(`${apiUrl}/api/services/${id}`);
       setServices(services.filter(service => service._id !== id));
     } catch (error) {
       console.error("Error deleting service:", error);
@@ -56,7 +57,7 @@ const Services = () => {
   const handleAddService = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/services', newService);
+      const response = await axios.post(`${apiUrl}/api/services`, newService);
       setServices([...services, response.data]);
       setNewService({ name: '', icon: '', description: '', price: '' });
     } catch (error) {
@@ -68,7 +69,7 @@ const Services = () => {
   const handleEditService = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:5000/api/services/${editingService._id}`, editingService);
+      const response = await axios.put(`${apiUrl}/api/services/${editingService._id}`, editingService);
       setServices(services.map(service => (service._id === response.data._id ? response.data : service)));
       closeModal();
     } catch (error) {

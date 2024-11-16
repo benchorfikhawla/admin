@@ -8,12 +8,13 @@ const Skills = () => {
   const [newSkill, setNewSkill] = useState({ name: '', icon: '', level: '' });
   const [editingSkill, setEditingSkill] = useState(null); // Pour l'édition d'une compétence
   const [modalOpen, setModalOpen] = useState(false); // Pour l'ouverture du modal d'édition
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   // Charger les compétences depuis le backend
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/skills');
+        const response = await axios.get(`${apiUrl}/api/skills`);
         setSkills(response.data);
       } catch (error) {
         console.error("Erreur lors du chargement des compétences", error);
@@ -25,7 +26,7 @@ const Skills = () => {
   // Supprimer une compétence
   const deleteSkill = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/skills/${id}`);
+      await axios.delete(`${apiUrl}/api/skills/${id}`);
       setSkills(skills.filter(skill => skill._id !== id)); // Met à jour la liste des compétences
     } catch (error) {
       console.error("Erreur lors de la suppression de la compétence", error);
@@ -58,7 +59,7 @@ const Skills = () => {
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/skills', newSkill);
+      const response = await axios.post(`${apiUrl}/api/skills`, newSkill);
       setSkills([...skills, response.data]);
       setNewSkill({ name: '', icon: '', level: '' }); // Réinitialiser le formulaire d'ajout
     } catch (error) {
@@ -70,7 +71,7 @@ const Skills = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updatedSkill = await axios.put(`http://localhost:5000/api/skills/${editingSkill._id}`, editingSkill);
+      const updatedSkill = await axios.put(`${apiUrl}/api/skills/${editingSkill._id}`, editingSkill);
       setSkills(skills.map(skill => (skill._id === updatedSkill.data._id ? updatedSkill.data : skill)));
       closeModal(); // Fermer le modal après la mise à jour
     } catch (error) {

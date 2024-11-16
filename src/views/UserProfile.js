@@ -87,7 +87,7 @@ function UserProfile() {
 
     // Use the user ID in the URL for the PUT request
     axios
-      .put(`http://localhost:5000/api/users/profile/${user._id}`, formData, {
+      .put(`${apiUrl}/api/users/profile/${user._id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -267,7 +267,7 @@ function UserProfile() {
                   <img
                     alt="Profile"
                     className="avatar"
-                    src={`http://localhost:5000${user.imageprofile}` || "default-image.jpg"} // Fallback image if not available
+                    src={`${apiUrl}${user.imageprofile}` || "default-image.jpg"} // Fallback image if not available
                   />
                   <h5 className="title">{user.name}</h5>
                 </a>
