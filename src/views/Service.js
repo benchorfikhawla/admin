@@ -110,7 +110,7 @@ const closeDeleteModal = () => {
           />
         </FormGroup>
         <FormGroup>
-          <Label for="icon">Icon URL</Label>
+          <Label for="icon">Icon i</Label>
           <Input
             type="text"
             name="icon"
@@ -156,9 +156,9 @@ const closeDeleteModal = () => {
           {services.map(service => (
             <tr key={service._id}>
               <td>{service.name}</td>
-              <td><img src={service.icon} alt="icon" style={{ width: 50, height: 50 }} /></td>
+              <td> {service.icon} </td>
               <td>{service.description}</td>
-              <td>${service.price}</td>
+              <td>{service.price}</td>
               <td className="text-center">
                 <Button  className="btn-icon btn-simple" color="warning" size="sm" onClick={() => openEditModal(service)}>
                   <i className="fa fa-edit"></i>
