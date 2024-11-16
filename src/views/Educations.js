@@ -10,6 +10,9 @@ const Education = () => {
   });
   const [editingEducation, setEditingEducation] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  // New state for delete confirmation modal
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [educationToDelete, setEducationToDelete] = useState(null);
 
   // Charger les données d'éducation depuis le backend
   useEffect(() => {
@@ -24,15 +27,30 @@ const Education = () => {
     fetchEducation();
   }, []);
 
+  // Open confirmation modal
+  const openDeleteModal = (edu) => {
+    setEducationToDelete(edu);
+    setDeleteModalOpen(true);
+  };
+
+  // Close confirmation modal
+  const closeDeleteModal = () => {
+    setEducationToDelete(null);
+    setDeleteModalOpen(false);
+  };
+
   // Supprimer un enregistrement d'éducation
-  const deleteEducation = async (id) => {
+  const confirmDeleteEducation = async () => {
+    if (!educationToDelete) return;
     try {
-      await axios.delete(`${apiUrl}/api/education/${id}`);
-      setEducation(education.filter(item => item._id !== id));
+      await axios.delete(`${apiUrl}/api/education/${educationToDelete._id}`);
+      setEducation(education.filter(item => item._id !== educationToDelete._id));
+      closeDeleteModal();
     } catch (error) {
       console.error("Erreur lors de la suppression de l'éducation", error);
     }
   };
+
 
   // Ouvrir le modal d'édition
   const openEditModal = (edu) => {
@@ -240,7 +258,9 @@ const Education = () => {
                       <td>{edu.description}</td>
                       <td className="text-center">
                         <Button color="warning"  className="btn-icon btn-simple"size="sm" onClick={() => openEditModal(edu)}><i className="fa fa-edit"></i></Button>
-                        <Button color="danger"  className="btn-icon btn-simple" size="sm" onClick={() => deleteEducation(edu._id)}><i className="fa fa-times"></i></Button>
+                        <Button color="danger" size="sm" onClick={() => openDeleteModal(edu)}>
+                    <i className="fa fa-times"></i>
+                  </Button>
                       </td>
                     </tr>
                   ))}
@@ -250,6 +270,21 @@ const Education = () => {
           </Card>
         </Col>
       </Row>
+      {/* Delete Confirmation Modal */}
+      <Modal isOpen={deleteModalOpen} toggle={closeDeleteModal}>
+        <ModalHeader toggle={closeDeleteModal}>Confirm Delete</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete the education record "{educationToDelete?.title}"?
+        </ModalBody>
+        <div className="modal-footer">
+          <Button color="secondary" onClick={closeDeleteModal}>
+            Cancel
+          </Button>
+          <Button color="danger" onClick={confirmDeleteEducation}>
+            Delete
+          </Button>
+        </div>
+      </Modal>
 
       {/* Modal d'édition */}
       <Modal isOpen={modalOpen} toggle={closeModal}>
