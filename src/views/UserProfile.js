@@ -112,7 +112,7 @@ function UserProfile() {
               <Form onSubmit={handleSubmit}>
                 <Row>
                   
-                  <Col className="px-md-1" md="5">
+                  <Col className="px-md-1" md="6">
                     <FormGroup>
                       <label>Username</label>
                       <Input
@@ -124,7 +124,7 @@ function UserProfile() {
                       />
                     </FormGroup>
                   </Col>
-                  <Col className="pl-md-1" md="5">
+                  <Col className="pl-md-1" md="6">
                     <FormGroup>
                       <label htmlFor="exampleInputEmail1">Email address</label>
                       <Input
