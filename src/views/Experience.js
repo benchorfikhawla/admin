@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const Experience = () => {
   const [experiences, setExperiences] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [newExperience, setNewExperience] = useState({
     title: '', company: '', startDate: '', endDate: '', description: ''
   });
@@ -14,7 +15,7 @@ const Experience = () => {
   useEffect(() => {
     const fetchExperiences = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/experience');
+        const response = await axios.get(`${apiUrl}/api/experience`);
         setExperiences(response.data);
       } catch (error) {
         console.error("Error fetching experiences", error);
@@ -26,7 +27,7 @@ const Experience = () => {
   // Delete an experience
   const deleteExperience = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/experience/${id}`);
+      await axios.delete(`${apiUrl}/api/experience/${id}`);
       setExperiences(experiences.filter(exp => exp._id !== id));
     } catch (error) {
       console.error("Error deleting experience", error);
@@ -59,7 +60,7 @@ const Experience = () => {
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/experience', newExperience);
+      const response = await axios.post(`${apiUrl}/api/experience`, newExperience);
       setExperiences([...experiences, response.data]);
       setNewExperience({ title: '', company: '', startDate: '', endDate: '', description: '' });
     } catch (error) {

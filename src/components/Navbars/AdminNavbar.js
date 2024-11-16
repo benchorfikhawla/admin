@@ -31,6 +31,7 @@ function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
+  const apiUrl = process.env.REACT_APP_API_URL;
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
     // Specify how to clean up after this effect:
@@ -75,7 +76,7 @@ function AdminNavbar(props) {
   useEffect(() => {
     // Fetch user profile data by email when the component mounts
     axios
-      .get(`http://localhost:5000/api/users/profile?email=${userEmail}`)
+      .get(`${apiUrl}/api/users/profile?email=${userEmail}`)
       .then((response) => {
         setUser(response.data);
       })
@@ -120,7 +121,7 @@ function AdminNavbar(props) {
                   <div className="photo">
                   <img 
                       alt="Profile" 
-                      src={user.imageprofile ? `http://localhost:5000${user.imageprofile}` : require("assets/img/anime3.png")} 
+                      src={user.imageprofile ? `${apiUrl}${user.imageprofile}` : require("assets/img/anime3.png")} 
                     />
                   </div>
                   <b className="caret d-none d-lg-block d-xl-block" />

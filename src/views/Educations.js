@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const Education = () => {
   const [education, setEducation] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [newEducation, setNewEducation] = useState({
     title: '', institution: '', startDate: '', endDate: '', description: '', certificateImage: null
   });
@@ -14,7 +15,7 @@ const Education = () => {
   useEffect(() => {
     const fetchEducation = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/education');
+        const response = await axios.get(`${apiUrl}/api/education`);
         setEducation(response.data);
       } catch (error) {
         console.error("Erreur lors du chargement des données d'éducation", error);
@@ -26,7 +27,7 @@ const Education = () => {
   // Supprimer un enregistrement d'éducation
   const deleteEducation = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/education/${id}`);
+      await axios.delete(`${apiUrl}/api/education/${id}`);
       setEducation(education.filter(item => item._id !== id));
     } catch (error) {
       console.error("Erreur lors de la suppression de l'éducation", error);
@@ -91,7 +92,7 @@ const Education = () => {
     formData.append('certificateImage', newEducation.certificateImage); // Append file here
 
     try {
-      const response = await axios.post('http://localhost:5000/api/education', formData, {
+      const response = await axios.post(`${apiUrl}/api/education`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',  // Set content type to multipart for file upload
         },
@@ -124,7 +125,7 @@ const Education = () => {
     }
 
     try {
-      const updatedEducation = await axios.put(`http://localhost:5000/api/education/${editingEducation._id}`, formData, {
+      const updatedEducation = await axios.put(`${apiUrl}/api/education/${editingEducation._id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',  // Set content type to multipart for file upload
         },

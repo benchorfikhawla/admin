@@ -154,7 +154,7 @@ const Skills = () => {
               <td>{skill.level}</td>
               <td className="text-center">
                 <Button  className="btn-icon btn-simple" color="warning"  size="sm" onClick={() => openEditModal(skill)}><i className="fas fa-pencil-alt"></i></Button>{` `}
-                <Button  className="btn-icon btn-simple" color="danger" size="sm"  onClick={() => deleteSkill(skill._id)}><i className="fas fa-trash"></i</Button>{` `}
+                <Button  className="btn-icon btn-simple" color="danger" size="sm"  onClick={() => deleteSkill(skill._id)}><i className="fas fa-trash"></i></Button>{` `}
               </td>
             </tr>
           ))}

@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const Project = () => {
   const [projects, setProjects] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [newProject, setNewProject] = useState({
     title: '', category: '', clientName: '', Date: '', description: '', details: '', moreDetails: '', images: []
   });
@@ -15,7 +16,7 @@ const Project = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/projects');
+        const response = await axios.get(`${apiUrl}/api/projects`);
         setProjects(response.data);
       } catch (error) {
         console.error("Error loading projects data", error);
@@ -27,7 +28,7 @@ const Project = () => {
   // Delete a project
   const deleteProject = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/projects/${id}`);
+      await axios.delete(`${apiUrl}/api/projects/${id}`);
       setProjects(projects.filter(item => item._id !== id));
     } catch (error) {
       console.error("Error deleting project", error);
@@ -92,7 +93,7 @@ const Project = () => {
     });
 
     try {
-      const response = await axios.post('http://localhost:5000/api/projects', formData, {
+      const response = await axios.post(`${apiUrl}/api/projects`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setProjects([...projects, response.data]);
@@ -122,7 +123,7 @@ const Project = () => {
     });
 
     try {
-      const response = await axios.put(`http://localhost:5000/api/projects/${editingProject._id}`, formData, {
+      const response = await axios.put(`${apiUrl}/api/projects/${editingProject._id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setProjects(projects.map(item => (item._id === response.data._id ? response.data : item)));
@@ -217,7 +218,7 @@ const Project = () => {
                         <Button color="warning" size="sm" onClick={() => openEditModal(project)}><i className="fa fa-edit"></i></Button>
                         <Button color="danger" size="sm" onClick={() => deleteProject(project._id)}><i className="fa fa-times"></i></Button>
                         {project.images && project.images.map((image, index) => (
-                          <img key={index} src={`http://localhost:5000${image}`} alt={`Project ${project.title} image`} width="50" height="50" />
+                          <img key={index} src={`${apiUrl}${image}`} alt={`Project ${project.title} image`} width="50" height="50" />
                         ))}
                       </td>
                     </tr>
