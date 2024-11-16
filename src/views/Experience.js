@@ -10,7 +10,8 @@ const Experience = () => {
   });
   const [editingExperience, setEditingExperience] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [experienceToDelete, setExperienceToDelete] = useState(null);
   // Fetch experience data from the backend
   useEffect(() => {
     const fetchExperiences = async () => {
@@ -23,12 +24,24 @@ const Experience = () => {
     };
     fetchExperiences();
   }, []);
+  // Open delete confirmation modal
+  const openDeleteModal = (id) => {
+    setExperienceToDelete(id);
+    setDeleteModalOpen(true);
+  };
+  // Close delete modal
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
+    setExperienceToDelete(null);
+  };
 
   // Delete an experience
-  const deleteExperience = async (id) => {
+  const deleteExperience = async () => {
     try {
-      await axios.delete(`${apiUrl}/api/experience/${id}`);
-      setExperiences(experiences.filter(exp => exp._id !== id));
+      await axios.delete(`${apiUrl}/api/experience/${experienceToDelete}`);
+      setExperiences(experiences.filter(exp => exp._id !== experienceToDelete));
+      setExperienceToDelete(null);
+      setDeleteModalOpen(false);
     } catch (error) {
       console.error("Error deleting experience", error);
     }
@@ -173,7 +186,7 @@ const Experience = () => {
                       <td>{exp.description}</td>
                       <td className="text-center">
                         <Button color="warning" className="btn-icon btn-simple" size="sm" onClick={() => openEditModal(exp)}><i className="fa fa-edit"></i></Button>
-                        <Button color="danger"  className="btn-icon btn-simple" size="sm" onClick={() => deleteExperience(exp._id)}><i className="fa fa-times"></i></Button>
+                        <Button color="danger" className="btn-icon btn-simple" size="sm" onClick={() => openDeleteModal(exp._id)}><i className="fa fa-times"></i></Button>
                       </td>
                     </tr>
                   ))}
@@ -247,6 +260,15 @@ const Experience = () => {
             </FormGroup>
             <Button color="primary" type="submit">Save Changes</Button>
           </Form>
+        </ModalBody>
+      </Modal>
+      {/* Delete Confirmation Modal */}
+      <Modal isOpen={deleteModalOpen} toggle={closeDeleteModal}>
+        <ModalHeader toggle={closeDeleteModal}>Delete Confirmation</ModalHeader>
+        <ModalBody>
+          <p>Are you sure you want to delete this experience?</p>
+          <Button color="danger" onClick={deleteExperience}>Yes, Delete</Button>{' '}
+          <Button color="secondary" onClick={closeDeleteModal}>Cancel</Button>
         </ModalBody>
       </Modal>
     </div>

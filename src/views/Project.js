@@ -176,7 +176,7 @@ const confirmDeleteProject = async () => {
                   <Input type="text" name="clientName" id="clientName" value={newProject.clientName} onChange={handleAddChange} />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="Date">Start Date</Label>
+                  <Label for="Date"> Date</Label>
                   <Input type="date" name="Date" id="Date" value={newProject.Date} onChange={handleAddChange} />
                 </FormGroup>
                 <FormGroup>
