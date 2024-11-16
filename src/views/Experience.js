@@ -172,8 +172,8 @@ const Experience = () => {
                       <td>{exp.endDate}</td>
                       <td>{exp.description}</td>
                       <td className="text-center">
-                        <Button color="warning" size="sm" onClick={() => openEditModal(exp)}><i className="fa fa-edit"></i></Button>
-                        <Button color="danger" size="sm" onClick={() => deleteExperience(exp._id)}><i className="fa fa-times"></i></Button>
+                        <Button color="warning" className="btn-icon btn-simple" size="sm" onClick={() => openEditModal(exp)}><i className="fa fa-edit"></i></Button>
+                        <Button color="danger"  className="btn-icon btn-simple" size="sm" onClick={() => deleteExperience(exp._id)}><i className="fa fa-times"></i></Button>
                       </td>
                     </tr>
                   ))}

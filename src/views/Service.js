@@ -144,10 +144,10 @@ const Services = () => {
               <td>{service.description}</td>
               <td>${service.price}</td>
               <td className="text-center">
-                <Button color="warning" size="sm" onClick={() => openEditModal(service)}>
+                <Button  className="btn-icon btn-simple" color="warning" size="sm" onClick={() => openEditModal(service)}>
                   <i className="fa fa-edit"></i>
                 </Button>
-                <Button color="danger" size="sm" onClick={() => deleteService(service._id)}>
+                <Button  className="btn-icon btn-simple" color="danger" size="sm" onClick={() => deleteService(service._id)}>
                   <i className="fa fa-trash"></i>
                 </Button>
               </td>

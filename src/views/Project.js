@@ -201,7 +201,7 @@ const Project = () => {
                     <th>Title</th>
                     <th>Category</th>
                     <th>Client Name</th>
-                    <th>Start Date</th>
+                    <th> Date</th>
                     <th>Description</th>
                     <th className="text-center">Actions</th>
                   </tr>
@@ -215,8 +215,8 @@ const Project = () => {
                       <td>{project.Date}</td>
                       <td>{project.description}</td>
                       <td className="text-center">
-                        <Button color="warning" size="sm" onClick={() => openEditModal(project)}><i className="fa fa-edit"></i></Button>
-                        <Button color="danger" size="sm" onClick={() => deleteProject(project._id)}><i className="fa fa-times"></i></Button>
+                        <Button  className="btn-icon btn-simple" color="warning" size="sm" onClick={() => openEditModal(project)}><i className="fa fa-edit"></i></Button>
+                        <Button  className="btn-icon btn-simple" color="danger" size="sm" onClick={() => deleteProject(project._id)}><i className="fa fa-times"></i></Button>
                         {project.images && project.images.map((image, index) => (
                           <img key={index} src={`${apiUrl}${image}`} alt={`Project ${project.title} image`} width="50" height="50" />
                         ))}

@@ -239,8 +239,8 @@ const Education = () => {
                       <td>{edu.endDate}</td>
                       <td>{edu.description}</td>
                       <td className="text-center">
-                        <Button color="warning" size="sm" onClick={() => openEditModal(edu)}><i className="fa fa-edit"></i></Button>
-                        <Button color="danger" size="sm" onClick={() => deleteEducation(edu._id)}><i className="fa fa-times"></i></Button>
+                        <Button color="warning"  className="btn-icon btn-simple"size="sm" onClick={() => openEditModal(edu)}><i className="fa fa-edit"></i></Button>
+                        <Button color="danger"  className="btn-icon btn-simple" size="sm" onClick={() => deleteEducation(edu._id)}><i className="fa fa-times"></i></Button>
                       </td>
                     </tr>
                   ))}
