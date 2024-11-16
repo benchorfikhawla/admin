@@ -151,8 +151,8 @@ const Skills = () => {
               <td>{skill.icon}</td>
               <td>{skill.level}</td>
               <td className="text-center">
-                <Button  className="btn-icon btn-simple" color="warning"  size="sm" onClick={() => openEditModal(skill)}><i className="fa fa-edit"></i></Button>
-                <Button  className="btn-icon btn-simple" color="danger" size="sm"  onClick={() => deleteSkill(skill._id)}><i className="fa fa-times" ></i></Button>
+                <Button  className="btn-icon btn-simple" color="warning"  size="sm" onClick={() => openEditModal(skill)}><i className="tim-icons icon-pencil"></i></Button>
+                <Button  className="btn-icon btn-simple" color="danger" size="sm"  onClick={() => deleteSkill(skill._id)}><i className="tim-icons icon-trash-simple" ></i></Button>
               </td>
             </tr>
           ))}
